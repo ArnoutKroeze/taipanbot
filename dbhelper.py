@@ -14,13 +14,19 @@ class DBHelper:
         Base.metadata.create_all(self.engine)
 
     def get_max_game_id(self):
-        return self.session.query(func.max(Games.game_id)).first()[0]
+        try:
+            max_id = self.session.query(func.max(Games.game_id)).first()[0]
+        except Exception:
+            max_id = 0
+        return max_id
 
 
     def new_game(self, player_1, player_2, player_3, player_4, date):
-        game = Games(game_id = self.get_max_game_id + 1, player_1 = player_1, player_2 =  player_2, player_3 = player_3, player_4 =  player_4, score_1 = 0,score_2 = 0, date = date)
+        game_id = self.get_max_game_id() + 1
+        game = Games(game_id = game_id, player_1 = player_1, player_2 =  player_2, player_3 = player_3, player_4 =  player_4, score_1 = 0,score_2 = 0, date = date)
         self.session.add(game)
         self.session.commit()
+        return
 
     def add_score(self, score1, score2, date):
         scores = self.session.query(Games).filter_by(game_id = self.get_max_game_id()).first()
@@ -29,6 +35,7 @@ class DBHelper:
                     date = date)
         self.session.add(new_scores)
         self.session.commit()
+        return
     
     def current_score(self):
         games = self.session.query(Games).filter_by(game_id = self.get_max_game_id())
@@ -55,7 +62,9 @@ class DBHelper:
             team2 += game.score_2
             verloop += f"`{team1}" + "".ljust(10 - len(str(team1))) + f"{team2}`\n"
         return verloop
+
+
 db = DBHelper()
 if __name__ == "__main__":
-    db.current_score()
+    db.new_game('arnout', 'rick', 'daniel', 'peter', 'date') 
     print('taipan!')
