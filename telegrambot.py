@@ -189,7 +189,6 @@ Geeft het scoreverloop van dit spel weer'''
         self.send_message(message, chat)
 
     def start_game(self, chat, text, telegram_id, name):
-        split_text = text.split()
         if len(split_text) != 5:
             self.send_message('Voer 4 namen in', chat)
             return
