@@ -189,12 +189,12 @@ Geeft het scoreverloop van dit spel weer'''
         self.send_message(message, chat)
 
     def start_game(self, chat, text, telegram_id, name):
-        if len(split_text) != 5:
+        if len(text) != 5:
             self.send_message('Voer 4 namen in', chat)
             return
-        if max(split_text, key=len) > 10:
+        if max(text, key=len) > 10:
             self.send_message('Namen hoeven echt niet langer dan 10 characters te zijn', chat)
-
+        split_text = text
         self.db.new_game(split_text[1], split_text[2], split_text[3], split_text[4], datetime.datetime.now())
 
         message = "We zijn een nieuw spelletje begonnen!"
