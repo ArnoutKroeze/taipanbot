@@ -4,5 +4,6 @@ example.db
 server.py
 __pycache__
 taipan.sqlite
+config.json
 
 
