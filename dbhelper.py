@@ -16,7 +16,11 @@ class DBHelper:
     def get_max_game_id(self):
         try:
             max_id = self.session.query(func.max(Games.game_id)).first()[0]
+            max_id = int(max_id)
         except Exception:
+            max_id = 0
+
+        if type(max_id) != int:
             max_id = 0
         return max_id
 
