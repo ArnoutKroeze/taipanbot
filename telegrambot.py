@@ -159,6 +159,8 @@ Geeft het scoreverloop van dit spel weer'''
             self.send_message('wtf hoe kom je aan {} punten'.format((score1 % 5)), chat)
             return
         try: 
+                if score1 > 400 or score2 > 400 or (score1 + score2 > 500):
+                    self.send_message('Dat zijn teveel punten >:(', chat)
             self.add_score(score1, score2)
             update_message = "Het staat nu {}".format(self.db.current_score())
             self.send_message(update_message, chat)
