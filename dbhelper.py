@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import sessionmaker
-from base import Base, Games
+from base import Base, Games, Admins
 
 
 class DBHelper:
@@ -66,9 +66,22 @@ class DBHelper:
             team2 += game.score_2
             verloop += f"`{team1}" + "".ljust(10 - len(str(team1))) + f"{team2}`\n"
         return verloop
+        
 
+    def add_admin(self, admin_id, name):
+        admin = Admins(admin_id = admin_id, name = name)
+        self.session.add(admin)
+        self.session.commit()
+        print('uh')
+        return
 
-db = DBHelper()
+    def check_admin(self, admin_id):
+        #check by id
+        if self.session.query(Admins).filter_by(admin_id = admin_id).first().admin_id == admin_id:
+            return True
+        else:
+            return False
+
 if __name__ == "__main__":
-    db.new_game('arnout', 'rick', 'daniel', 'peter', 'date') 
-    print('taipan!')
+    db = DBHelper()
+

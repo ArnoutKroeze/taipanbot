@@ -15,3 +15,10 @@ class Games(Base):
     score_1 = Column(Integer)
     score_2 = Column(Integer)
     date = Column(String)
+
+class Admins(Base):
+    __tablename__ = 'admins'
+
+    id = Column(Integer, primary_key = True)
+    admin_id = Column(Integer)
+    name = Column(String)

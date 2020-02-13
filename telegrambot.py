@@ -118,6 +118,12 @@ Geeft het scoreverloop van dit spel weer'''
 
     def handle_message(self, chat, text, telegram_id, name, type):
         text = text.lower()
+
+        if not self.db.check_admin(int(telegram_id) and telegram_id != self.ADMIN):
+            self.send_message('Vraag arnout of hij je toe wil voegen', chat)
+            self.send_message(f'{name} tried texting me, id = {telegram_id}', self.ADMIN)
+            return
+
         if text[0] == "/":
             self.handle_command(chat, text, telegram_id, name)
             return
@@ -176,7 +182,8 @@ Geeft het scoreverloop van dit spel weer'''
             '/help': self.show_help,
             '/start': self.start_game,
             '/vera': self.vera,
-            '/verloop': self.show_scoreverloop
+            '/verloop': self.show_scoreverloop,
+            '/add': self.add_admin
         }
         split_text = text.split()
         command = split_text[0].split("@")[0]
@@ -221,7 +228,22 @@ Geeft het scoreverloop van dit spel weer'''
         self.db.add_score(points1, points2, datetime.datetime.now())
         return
 
+    def add_admin(self, chat, text, telegram_id, name):
+        if telegram_id != self.ADMIN:
+            self.send_message('Fuck you', chat)
+            return
+        
+        if len(text) == 3:
+            new_name = text[1]
+            new_id = int(text[2])
+        else:
+            self.send_message('Put a name and an id', chat)
+            return
+
+        self.db.add_admin(new_id, new_name)
+        self.send_message(f'{new_name}  has been added to the adminlist by {name}', self.ADMIN)
+        return
+
 
 if __name__ == '__main__':
     daniel = telegram_chatbot()
-    daniel.run()
