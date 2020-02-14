@@ -119,7 +119,7 @@ Geeft het scoreverloop van dit spel weer'''
     def handle_message(self, chat, text, telegram_id, name, type):
         text = text.lower()
 
-        if not self.db.check_admin(int(telegram_id) and telegram_id != self.ADMIN):
+        if (not self.db.check_admin(int(telegram_id))) and (telegram_id != self.ADMIN):
             self.send_message('Vraag arnout of hij je toe wil voegen', chat)
             self.send_message(f'{name} tried texting me, id = {telegram_id}', self.ADMIN)
             return

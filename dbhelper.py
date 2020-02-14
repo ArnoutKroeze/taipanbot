@@ -72,13 +72,17 @@ class DBHelper:
         admin = Admins(admin_id = admin_id, name = name)
         self.session.add(admin)
         self.session.commit()
-        print('uh')
         return
 
     def check_admin(self, admin_id):
         #check by id
-        if self.session.query(Admins).filter_by(admin_id = admin_id).first().admin_id == admin_id:
-            return True
+        print()
+        user = self.session.query(Admins).filter_by(admin_id = admin_id).first()
+        if user:
+            if user.admin_id == admin_id:
+                return True
+            else:
+                return False
         else:
             return False
 
