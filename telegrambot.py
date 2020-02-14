@@ -247,3 +247,4 @@ Geeft het scoreverloop van dit spel weer'''
 
 if __name__ == '__main__':
     daniel = telegram_chatbot()
+    daniel.run()
