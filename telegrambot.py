@@ -38,9 +38,9 @@ Geeft het scoreverloop van dit spel weer'''
         self.ADMIN = int(data["ADMIN"])
         self.URL = "https://api.telegram.org/bot{}/".format(self.token)
 
-        self.nicknames = ('daniël', 'daniel', 'jongen', 'tyfushomo', 'daniel,', 'daniël,')
+        self.nicknames = ('daniël', 'daniel', 'jongen,', 'tyfushomo,', 'daniel,', 'daniël,')
         self.compliments = ('dankje', 'lief', 'lieve', 'dank', 'braaf', 'brave', 'goed', 'goedzo', 'slim')
-        self.insult = ('stomme', 'kut', 'idioot', 'stom', 'idiote', 'klote')
+        self.insult = ('stomme', 'kut', 'idioot', 'stom', 'idiote', 'klote', 'kanker', )
         self.datafile = 'testfile.json'
         self.data_file = os.path.join(self.this_folder, self.datafile)
 
@@ -208,7 +208,7 @@ Geeft het scoreverloop van dit spel weer'''
             return
 
         split_text = text
-        self.db.new_game(split_text[1], split_text[2], split_text[3], split_text[4], datetime.datetime.now())
+        self.db.new_game(split_text[1].capitalize(), split_text[2].capitalize(), split_text[3].capitalize(), split_text[4].capitalize(), datetime.datetime.now())
 
         message = "We zijn een nieuw spelletje begonnen!"
         self.send_message(message, chat)
