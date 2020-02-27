@@ -5,6 +5,7 @@ import traceback
 import os
 import sys
 import datetime
+import random
 from dbhelper import DBHelper
 
 
@@ -169,13 +170,27 @@ Geeft het scoreverloop van dit spel weer'''
                 self.send_message('Dat zijn teveel punten >:(', chat)
                 return
             self.add_score(score1, score2)
-            update_message = "Het staat nu {}".format(self.db.current_score())
-            self.send_message(update_message, chat)
-            return
+            update_message = "Het staat nu {} \n".format(self.db.current_score())
         except Exception as e:
             self.send_message(e,self.ADMIN)
             self.send_message('Something went wrong', chat)
             return
+        
+        # add snarky messages
+
+        if score1 == 200 or score2 == 200:
+            update_message += "DubBeLSpEL"
+        elif score1 > 150 or score2 > 150:
+            update_message += "wajoowwwwww veel punten!!"
+        elif score1 < -150:
+            update_message += f"Dat moet beter kunnen {random.choice(self.db.get_players_from_team(1))}"
+        elif score2 < -150:
+            update_message += f"Dat moet beter kunnen {random.choice(self.db.get_players_from_team(2))}"
+
+        
+
+        self.send_message(update_message, chat)
+        return
 
     def handle_command(self, chat, text, telegram_id, name):
         switcher = {

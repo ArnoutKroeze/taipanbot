@@ -76,7 +76,6 @@ class DBHelper:
 
     def check_admin(self, admin_id):
         #check by id
-        print()
         user = self.session.query(Admins).filter_by(admin_id = admin_id).first()
         if user:
             if user.admin_id == admin_id:
@@ -86,6 +85,15 @@ class DBHelper:
         else:
             return False
 
+    def get_players_from_team(self, team):
+        game = self.session.query(Games).filter_by(game_id = self.get_max_game_id()).first()
+        if team == 1:
+            players = [game.player_1, game.player_2]
+        elif team == 2:
+            players = [game.player_3, game.player_4]
+        return players
+
 if __name__ == "__main__":
     db = DBHelper()
+    print(db.get_players_from_team(2))
 
