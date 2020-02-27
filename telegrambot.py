@@ -180,6 +180,8 @@ Geeft het scoreverloop van dit spel weer'''
 
         if score1 == 200 or score2 == 200:
             update_message += "DubBeLSpEL"
+        elif score1 > 225 or score2 > 225:
+            update_message += "GROOTE PAN"
         elif score1 > 150 or score2 > 150:
             update_message += "wajoowwwwww veel punten!!"
         elif score1 < -50:
