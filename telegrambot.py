@@ -182,9 +182,9 @@ Geeft het scoreverloop van dit spel weer'''
             update_message += "DubBeLSpEL"
         elif score1 > 150 or score2 > 150:
             update_message += "wajoowwwwww veel punten!!"
-        elif score1 < -150:
+        elif score1 < -50:
             update_message += f"Dat moet beter kunnen {random.choice(self.db.get_players_from_team(1))}"
-        elif score2 < -150:
+        elif score2 < -50:
             update_message += f"Dat moet beter kunnen {random.choice(self.db.get_players_from_team(2))}"
 
         
